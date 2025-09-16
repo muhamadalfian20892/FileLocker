@@ -1,0 +1,22 @@
+python -m nuitka ^
+    --onefile ^
+    --windows-disable-console ^
+    --windows-product-name="FileLocker" ^
+    --windows-product-version="1.2" ^
+    --windows-company-name="Technokers Lab" ^
+--include-module=optparse ^
+    --file-description="A program to lock your personal file." ^
+    --include-data-dir=docs=docs ^
+    --nofollow-import-to=tkinter ^
+    --nofollow-import-to=unittest ^
+    --nofollow-import-to=pytest ^
+    --nofollow-import-to=numpy ^
+    --nofollow-import-to=pandas ^
+    --nofollow-import-to=scipy ^
+    --nofollow-import-to=matplotlib ^
+    --nofollow-import-to=google.auth ^
+    --nofollow-import-to=google.protobuf ^
+    --nofollow-import-to=yt_dlp ^
+    --nofollow-import-to=yt_dlp.lazy_extractors ^
+    --nofollow-import-to=torch ^
+    main.py

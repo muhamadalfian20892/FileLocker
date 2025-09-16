@@ -1,0 +1,17 @@
+version 1.2.1:
+Added support for multiple languages. users can now feel worldly while locking their files.
+Cleaned up some backend stuff probably. i forget.
+version 1.2:
+A new setting is added to automatically remove unlocked files after successful decryption.
+Enhanced File Information: The file info panel now displays The file's creation date and time and The last accessed date and time
+The history list now has 4 columns, adding action type(lock or unlock)
+Added a theme choice in general settings to switch between "Default" and "Dark" themes.
+Version 1.1:
+ Added "Use Last Password": Users will be prompted to reuse their last password when locking a previously locked file.  
+ Added Password History: Tracks previously used passwords for reference.  
+ Added Settings Menu: Accessible through the menubar, allowing users to configure the program.  
+ File AutoOpen Feature: The program can now automatically open unlocked files. This feature can be toggled in the settings.  
+ Enhanced Security: Prevents users from locking files in restricted areas, such as the program directory.  
+
+Version 1.0:
+ Initial Release: Established the foundational functionality of the program.  
