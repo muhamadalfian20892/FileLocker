@@ -35,7 +35,7 @@ This app has a handful of key features designed to make file security easy:
 #### 1. The Easy Way (Recommended)
 You don't need to install anything. Just grab the ready-to-use version.
 
-➡️ **[Download the latest version from the Releases page!](https://github.com/muhamadalfian20892/FileLocker/releases)** ⬅️
+ **[Download the latest version from the Releases page!](https://github.com/muhamadalfian20892/FileLocker/releases)** 
 
 Download the `.exe` file, and you're good to go.
 
@@ -44,10 +44,9 @@ If you want to run the app from its Python source code, follow these steps:
 
 1.  **Clone this repository:**
     ```bash
-    git clone https://github.com/your-username/your-repo.git
-    cd your-repo
+    git clone https://github.com/muhamadalfian20892/FileLocker.git
+    cd FileLocker
     ```
-    <!-- Replace the URL above with your repository's URL -->
 
 2.  **Install the required libraries:**
     You'll need Python 3. Then, run this command in your terminal:
