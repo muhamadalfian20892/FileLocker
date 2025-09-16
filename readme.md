@@ -35,8 +35,7 @@ This app has a handful of key features designed to make file security easy:
 #### 1. The Easy Way (Recommended)
 You don't need to install anything. Just grab the ready-to-use version.
 
-➡️ **[Download the latest version from the Releases page!](https://github.com/your-username/your-repo/releases)** ⬅️
-<!-- Replace the URL above with the link to your repository's releases page -->
+➡️ **[Download the latest version from the Releases page!](https://github.com/muhamadalfian20892/FileLocker/releases)** ⬅️
 
 Download the `.exe` file, and you're good to go.
 
