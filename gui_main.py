@@ -8,6 +8,8 @@ import threading
 
 # Local imports
 from translate import _
+from nvda import speak
+from variables import APP_VERSION
 from gui_utils import (
     create_bold_label,
     show_error_dialog,
@@ -48,7 +50,6 @@ class MainWindow(wx.Frame):
         ThemeManager.apply_theme(self, self.settings.get('theme'))
         
         self.CreateStatusBar()
-        self.SetStatusText(_("Ready"))
         
         self.Center()
         
@@ -59,6 +60,8 @@ class MainWindow(wx.Frame):
         
         self.update_ui_state()
         self.update_history_list()
+        
+        speak(_("File Locker window ready"))
 
     def get_program_directory(self) -> Path:
         if getattr(sys, 'frozen', False):
@@ -144,6 +147,10 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_clear_history, clear_history_item)
         self.Bind(wx.EVT_MENU, self.on_about, about_item)
 
+    def SetStatusText(self, text: str):
+        super().SetStatusText(text)
+        speak(text)
+
     def setup_drag_drop(self):
         drop_target = FileDropTarget(self)
         self.SetDropTarget(drop_target)
@@ -176,7 +183,8 @@ class MainWindow(wx.Frame):
         
         if has_file:
             self.update_file_info()
-            self.SetStatusText(_("Selected: {}").format(self.current_file))
+            status_text = _("Locked") if is_locked else _("Unlocked")
+            self.SetStatusText(_("Selected: {}. Status: {}.").format(os.path.basename(self.current_file), status_text))
         else:
             self.SetStatusText(_("Ready"))
 
@@ -314,13 +322,18 @@ class MainWindow(wx.Frame):
         
         if self.settings.get('confirm_file_operations'):
             msg = _("Are you sure you want to lock '{}'?").format(os.path.basename(self.current_file))
-            if wx.MessageBox(msg, _("Confirm Lock"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION) != wx.YES:
+            title = _("Confirm Lock")
+            speak(f"{title}. {msg}")
+            if wx.MessageBox(msg, title, wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION) != wx.YES:
                 return
         
         recent_passwords = self.password_history.get_history_for_file(self.current_file)
         if recent_passwords:
             password = recent_passwords[0]['password']
-            if wx.MessageBox(_("Use last password for this file?"), _("Use Last Password"), wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
+            msg = _("Use last password for this file?")
+            title = _("Use Last Password")
+            speak(f"{title}. {msg}")
+            if wx.MessageBox(msg, title, wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
                 self.start_encryption(password)
                 return
 
@@ -336,10 +349,12 @@ class MainWindow(wx.Frame):
         dlg.Destroy()
 
     def show_manual_password_entry(self):
+        title = _("Enter Password")
+        speak(title)
         dlg = wx.TextEntryDialog(
             self,
             _("Enter password for encryption:"),
-            _("Enter Password"),
+            title,
             style=wx.TE_PASSWORD | wx.OK | wx.CANCEL
         )
         
@@ -395,15 +410,19 @@ class MainWindow(wx.Frame):
         
         if self.settings.get('confirm_file_operations'):
             msg = _("Are you sure you want to unlock '{}'?").format(os.path.basename(self.current_file))
-            if wx.MessageBox(msg, _("Confirm Unlock"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION) != wx.YES:
+            title = _("Confirm Unlock")
+            speak(f"{title}. {msg}")
+            if wx.MessageBox(msg, title, wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION) != wx.YES:
                 return
         self.show_unlock_password_entry()
 
     def show_unlock_password_entry(self):
+        title = _("Enter Password")
+        speak(title)
         dlg = wx.TextEntryDialog(
             self,
             _("Enter password to unlock the file:"),
-            _("Enter Password"),
+            title,
             style=wx.TE_PASSWORD | wx.OK | wx.CANCEL
         )
         
@@ -480,6 +499,7 @@ class MainWindow(wx.Frame):
         self.update_ui_state()
         
         if self.is_file_locked():
+            speak(_("Attempting to unlock {} from history.").format(os.path.basename(filepath)))
             self.start_decryption(password)
 
     def on_settings(self, event):
@@ -490,15 +510,19 @@ class MainWindow(wx.Frame):
         dlg.Destroy()
 
     def on_clear_history(self, event):
-        if wx.MessageBox(_("Are you sure you want to clear all password history?\nThis action cannot be undone."), _("Confirm Clear History"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION) == wx.YES:
+        msg = _("Are you sure you want to clear all password history?\nThis action cannot be undone.")
+        title = _("Confirm Clear History")
+        speak(f"{title}. {msg}")
+        if wx.MessageBox(msg, title, wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION) == wx.YES:
             self.password_history.clear_history()
             self.update_history_list()
             show_success_dialog(self, _("Password history has been cleared."))
 
     def on_about(self, event):
+        speak(_("About File Locker dialog"))
         info = wx.adv.AboutDialogInfo()
         info.SetName(_("File Locker"))
-        info.SetVersion("1.2.1")
+        info.SetVersion(APP_VERSION)
         description = _("With this program, you can lock/unlock your secret file using a set of passwords.\n\nFeatures:\n- AES-256 encryption,\n- Password generation,\n- Password history,\n- File drag and drop support,\n- Theme support,\n- Auto-launch file after unlock.")
         info.SetDescription(description)
         wx.adv.AboutBox(info)

@@ -1,7 +1,7 @@
 # variables.py
 
 # version number goes brrr
-APP_VERSION = "1.2.1"
+APP_VERSION = "1.2.2"
 
 # languages we support, i guess
 SUPPORTED_LANGUAGES = {

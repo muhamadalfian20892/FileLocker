@@ -7,6 +7,7 @@ from datetime import datetime
 
 from gui_utils import create_bold_label, PasswordStrengthMeter
 from translate import _
+from nvda import speak
 
 # my custom stuff
 from variables import SUPPORTED_LANGUAGES
@@ -23,6 +24,7 @@ class PasswordGeneratorDialog(wx.Dialog):
         self.settings = settings
         self.password = ""
         self.init_ui()
+        speak(_("Generate Password dialog"))
     
     def init_ui(self):
         panel = wx.Panel(self)
@@ -115,10 +117,12 @@ class PasswordGeneratorDialog(wx.Dialog):
         self.on_generate(None)
     
     def on_manual_entry(self, event):
+        title = _("Manual Password Entry")
+        speak(title)
         dlg = wx.TextEntryDialog(
             self,
             _("Enter your password:"),
-            _("Manual Password Entry"),
+            title,
             style=wx.TE_PASSWORD | wx.OK | wx.CANCEL
         )
         
@@ -129,8 +133,10 @@ class PasswordGeneratorDialog(wx.Dialog):
                 self.password_ctrl.SetValue(password)
                 self.strength_meter.set_strength(password)
             else:
+                msg = _("Password cannot be empty!")
+                speak(msg)
                 wx.MessageBox(
-                    _("Password cannot be empty!"),
+                    msg,
                     _("Error"),
                     wx.OK | wx.ICON_ERROR
                 )
@@ -152,8 +158,10 @@ class PasswordGeneratorDialog(wx.Dialog):
         if self.use_symbols.GetValue(): chars += string.punctuation
         
         if not chars:
+            msg = _("Please select at least one character type!")
+            speak(msg)
             wx.MessageBox(
-                _("Please select at least one character type!"),
+                msg,
                 _("Error"),
                 wx.OK | wx.ICON_ERROR
             )
@@ -170,8 +178,10 @@ class PasswordGeneratorDialog(wx.Dialog):
         if wx.TheClipboard.Open():
             wx.TheClipboard.SetData(wx.TextDataObject(self.password))
             wx.TheClipboard.Close()
+            msg = _("Password copied to clipboard!")
+            speak(msg)
             wx.MessageBox(
-                _("Password copied to clipboard!"),
+                msg,
                 _("Success"),
                 wx.OK | wx.ICON_INFORMATION
             )
@@ -185,6 +195,7 @@ class ProgressDialog(wx.Dialog):
             style=wx.DEFAULT_DIALOG_STYLE & ~wx.CLOSE_BOX
         )
         self.init_ui(message)
+        speak(message)
     
     def init_ui(self, message: str):
         panel = wx.Panel(self)
@@ -206,17 +217,22 @@ class ProgressDialog(wx.Dialog):
         wx.CallAfter(self._do_update, value, status_text)
     
     def _do_update(self, value: float, status_text: str = None):
-        self.gauge.SetValue(int(value))
+        val_int = int(value)
+        self.gauge.SetValue(val_int)
+        
         if status_text is None:
-            status_text = f"{int(value)}%"
+            status_text = f"{val_int}%"
         self.status.SetLabel(status_text)
+        
+        if val_int == 100:
+            speak(_("Completed"))
 
 class SettingsDialog(wx.Dialog):
     def __init__(self, parent, settings):
         super().__init__(
             parent,
             title=_("Settings"),
-            size=(500, 600),
+            size=(500, 650),
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         )
         self.settings = settings
@@ -233,6 +249,7 @@ class SettingsDialog(wx.Dialog):
                 pass # lol who cares if it fails
 
         self.init_ui()
+        speak(_("Settings dialog"))
     
     def init_ui(self):
         panel = wx.Panel(self)
@@ -246,6 +263,9 @@ class SettingsDialog(wx.Dialog):
         
         security_panel = self.create_security_panel(notebook)
         notebook.AddPage(security_panel, _("Security"))
+        
+        accessibility_panel = self.create_accessibility_panel(notebook)
+        notebook.AddPage(accessibility_panel, _("Accessibility"))
         
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(notebook, 1, wx.EXPAND | wx.ALL, 5)
@@ -377,6 +397,40 @@ class SettingsDialog(wx.Dialog):
         
         panel.SetSizer(sizer)
         return panel
+
+    def create_accessibility_panel(self, parent):
+        panel = wx.Panel(parent)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        
+        box = wx.StaticBox(panel, label=_("Screen Reader (NVDA)"))
+        box_sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        
+        self.nvda_enabled = wx.CheckBox(panel, label=_("Enable NVDA Support"))
+        self.nvda_enabled.SetValue(self.settings.get('nvda_enabled'))
+        
+        # Verbosity options
+        verbosity_label = wx.StaticText(panel, label=_("Verbosity Level:"))
+        self.verbosity_choices = [_("Quiet"), _("Default"), _("Verbose")]
+        self.verbosity_keys = ["quiet", "default", "verbose"]
+        self.nvda_verbosity = wx.Choice(panel, choices=self.verbosity_choices)
+        
+        current_verbosity = self.settings.get('nvda_verbosity')
+        try:
+            current_idx = self.verbosity_keys.index(current_verbosity)
+            self.nvda_verbosity.SetSelection(current_idx)
+        except ValueError:
+            self.nvda_verbosity.SetSelection(1) # Default to 'default'
+        
+        verbosity_box = wx.BoxSizer(wx.HORIZONTAL)
+        verbosity_box.Add(verbosity_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 5)
+        verbosity_box.Add(self.nvda_verbosity, 0)
+        
+        box_sizer.Add(self.nvda_enabled, 0, wx.ALL, 5)
+        box_sizer.Add(verbosity_box, 0, wx.ALL, 5)
+        
+        sizer.Add(box_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        panel.SetSizer(sizer)
+        return panel
     
     def on_save(self, event):
         # check if they fiddled with the language dropdown
@@ -387,8 +441,10 @@ class SettingsDialog(wx.Dialog):
             with open(CONFIG_FILE, "w", encoding="utf-8") as f:
                 f.write(new_code)
             
+            msg = _("Please restart the application for the language change to take effect.")
+            speak(msg)
             wx.MessageBox(
-                _("Please restart the application for the language change to take effect."),
+                msg,
                 _("Restart Required"),
                 wx.OK | wx.ICON_INFORMATION
             )
@@ -404,28 +460,41 @@ class SettingsDialog(wx.Dialog):
         self.settings.set('show_password_strength', self.show_strength.GetValue())
         self.settings.set('max_history_entries', self.max_history.GetValue())
         
+        # Save NVDA settings
+        self.settings.set('nvda_enabled', self.nvda_enabled.GetValue())
+        selected_verbosity_idx = self.nvda_verbosity.GetSelection()
+        self.settings.set('nvda_verbosity', self.verbosity_keys[selected_verbosity_idx])
+        
+        speak(_("Settings saved."))
         self.EndModal(wx.ID_OK)
     
     def on_reset_defaults(self, event):
+        msg = _("Are you sure you want to reset all settings to defaults?")
+        title = _("Confirm Reset")
+        speak(f"{title}. {msg}")
         if wx.MessageBox(
-            _("Are you sure you want to reset all settings to defaults?"),
-            _("Confirm Reset"),
+            msg, title,
             wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION
         ) == wx.YES:
             self.settings.reset_to_defaults()
+            speak(_("Settings reset to defaults."))
             self.Close()
     
     def on_clear_history(self, event):
+        msg = _("Are you sure you want to clear all password history?")
+        title = _("Confirm Clear History")
+        speak(f"{title}. {msg}")
         if wx.MessageBox(
-            _("Are you sure you want to clear all password history?"),
-            _("Confirm Clear History"),
+            msg, title,
             wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION
         ) == wx.YES:
             from core_history import PasswordHistory
             history = PasswordHistory(self.settings.get('max_history_entries'))
             history.clear_history()
+            success_msg = _("Password history cleared successfully!")
+            speak(success_msg)
             wx.MessageBox(
-                _("Password history cleared successfully!"),
+                success_msg,
                 _("Success"),
                 wx.OK | wx.ICON_INFORMATION
             )

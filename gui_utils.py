@@ -3,6 +3,10 @@ import os
 from typing import Optional
 from pathlib import Path
 
+# Local imports
+from nvda import speak
+from translate import _
+
 def create_bold_label(parent, text: str) -> wx.StaticText:
     """Create a bold static text label"""
     label = wx.StaticText(parent, label=text)
@@ -11,8 +15,13 @@ def create_bold_label(parent, text: str) -> wx.StaticText:
     label.SetFont(font)
     return label
 
-def show_error_dialog(parent, message: str, title: str = "Error"):
-    """Show error dialog with custom styling"""
+def show_error_dialog(parent, message: str, title: Optional[str] = None):
+    """Show error dialog with custom styling and screen reader announcement"""
+    if title is None:
+        title = _("Error")
+    
+    speak(f"{title}. {message}")
+    
     dlg = wx.MessageDialog(
         parent,
         message,
@@ -22,8 +31,13 @@ def show_error_dialog(parent, message: str, title: str = "Error"):
     dlg.ShowModal()
     dlg.Destroy()
 
-def show_success_dialog(parent, message: str, title: str = "Success"):
-    """Show success dialog with custom styling"""
+def show_success_dialog(parent, message: str, title: Optional[str] = None):
+    """Show success dialog with custom styling and screen reader announcement"""
+    if title is None:
+        title = _("Success")
+    
+    speak(f"{title}. {message}")
+    
     dlg = wx.MessageDialog(
         parent,
         message,

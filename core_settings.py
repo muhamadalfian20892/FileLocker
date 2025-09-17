@@ -17,7 +17,9 @@ DEFAULT_SETTINGS = {
     "confirm_file_operations": True,
     "show_password_strength": True,
     "max_history_entries": 50,
-    "theme": "default"
+    "theme": "default",
+    "nvda_enabled": True,
+    "nvda_verbosity": "default" # quiet, default, verbose
 }
 
 class Settings:

@@ -1,3 +1,10 @@
+version 1.2.2:
+NVDA Screen Reader Integration: Hooked up full support for the NVDA screen reader.
+New Accessibility Settings:
+added a new "Accessibility" tab in the settings menu for all this.
+You can turn the NVDA support on or off in there.
+Added a Verbosity setting to control how much the app talks. Choose between Quiet, Default, or Verbose (if you're lonely).
+All this new text is ready to be translated.
 version 1.2.1:
 Added support for multiple languages. users can now feel worldly while locking their files.
 Cleaned up some backend stuff probably. i forget.

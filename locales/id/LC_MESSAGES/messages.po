@@ -1,0 +1,635 @@
+# Translations template for FileLocker.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the FileLocker project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: FileLocker VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-09-17 12:56+0700\n"
+"PO-Revision-Date: 2025-09-17 13:00+0700\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Indonesian <LL@li.org>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ui.py:14
+msgid "FileLocker"
+msgstr "FileLocker"
+
+#: ui.py:29
+msgid "Select File"
+msgstr "Pilih File"
+
+#: gui_main.py:78 ui.py:33
+msgid "Browse..."
+msgstr "Jelajahi..."
+
+#: gui_main.py:352 gui_main.py:420 ui.py:38
+msgid "Enter Password"
+msgstr "Masukkan Kata Sandi"
+
+#: ui.py:45
+msgid "Encrypt"
+msgstr "Enkripsi"
+
+#: ui.py:46
+msgid "Decrypt"
+msgstr "Dekripsi"
+
+#: ui.py:67
+msgid "Settings..."
+msgstr "Pengaturan..."
+
+#: ui.py:67
+msgid "Open application settings"
+msgstr "Buka pengaturan aplikasi"
+
+#: ui.py:71
+msgid "Exit"
+msgstr "Keluar"
+
+#: ui.py:74
+msgid "About..."
+msgstr "Tentang..."
+
+#: gui_dialogs.py:234 ui.py:76
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: ui.py:77
+msgid "Help"
+msgstr "Bantuan"
+
+#: gui_main.py:189 ui.py:85
+msgid "Ready"
+msgstr "Siap"
+
+#: ui.py:94
+msgid "A simple tool to encrypt and decrypt files."
+msgstr "Alat sederhana untuk mengenkripsi dan mendekripsi file."
+
+#: ui.py:95
+msgid "About FileLocker"
+msgstr "Tentang FileLocker"
+
+#: ui.py:98
+msgid "Select a file"
+msgstr "Pilih sebuah file"
+
+#: gui_main.py:293 ui.py:98
+msgid "All files (*.*)|*.*"
+msgstr "Semua file (*.*)|*.*"
+
+#: ui.py:105
+msgid "File selected: {}"
+msgstr "File terpilih: {}"
+
+#: ui.py:112
+msgid "File path and password are required."
+msgstr "Lokasi file dan kata sandi wajib diisi."
+
+#: gui_dialogs.py:140 gui_dialogs.py:165 ui.py:112 ui.py:123
+msgid "Error"
+msgstr "Kesalahan"
+
+#: ui.py:117
+msgid "Operation successful!"
+msgstr "Operasi berhasil!"
+
+#: ui.py:118
+msgid "Operation completed successfully."
+msgstr "Operasi berhasil diselesaikan."
+
+#: gui_dialogs.py:185 gui_dialogs.py:498 ui.py:118
+msgid "Success"
+msgstr "Berhasil"
+
+#: ui.py:122
+msgid "Operation failed!"
+msgstr "Operasi gagal!"
+
+#: gui_main.py:30 gui_main.py:524
+msgid "File Locker"
+msgstr "File Locker"
+
+#: gui_main.py:64
+msgid "File Locker window ready"
+msgstr "Jendela Pengunci File siap"
+
+#: gui_main.py:73
+msgid "File Selection"
+msgstr "Pemilihan File"
+
+#: gui_main.py:94
+msgid "Lock File"
+msgstr "Kunci File"
+
+#: gui_main.py:95
+msgid "Unlock File"
+msgstr "Buka Kunci File"
+
+#: gui_main.py:103
+msgid "Recent Files"
+msgstr "File Terbaru"
+
+#: gui_main.py:110
+msgid "File"
+msgstr "File"
+
+#: gui_dialogs.py:262 gui_main.py:111
+msgid "Password"
+msgstr "Kata Sandi"
+
+#: gui_main.py:112
+msgid "Date"
+msgstr "Tanggal"
+
+#: gui_main.py:126
+msgid "&Open\tCtrl+O"
+msgstr "&Buka\tCtrl+O"
+
+#: gui_main.py:128
+msgid "E&xit\tAlt+F4"
+msgstr "Ke&luar\tAlt+F4"
+
+#: gui_main.py:131
+msgid "&Settings\tCtrl+,"
+msgstr "&Pengaturan\tCtrl+,"
+
+#: gui_main.py:133
+msgid "Clear Password &History"
+msgstr "Hapus &Riwayat Kata Sandi"
+
+#: gui_main.py:136
+msgid "&About File Locker"
+msgstr "&Tentang Pengunci File"
+
+#: gui_main.py:138
+msgid "&File"
+msgstr "&File"
+
+#: gui_main.py:139
+msgid "&Tools"
+msgstr "&Alat"
+
+#: gui_main.py:140
+msgid "&Help"
+msgstr "&Bantuan"
+
+#: gui_main.py:168
+msgid ""
+"Cannot lock files in the program directory:\n"
+"{}\n"
+"\n"
+"This is a safety measure to keep the program files secure."
+msgstr ""
+"Tidak dapat mengunci file di direktori program:\n"
+"{}\n"
+"\n"
+"Ini adalah tindakan pengamanan untuk menjaga keamanan file program."
+
+#: gui_main.py:186 gui_main.py:200
+msgid "Locked"
+msgstr "Terkunci"
+
+#: gui_main.py:186 gui_main.py:200
+msgid "Unlocked"
+msgstr "Terbuka"
+
+#: gui_main.py:187
+msgid "Selected: {}. Status: {}."
+msgstr "Terpilih: {}. Status: {}."
+
+#: gui_main.py:203
+msgid "Filename"
+msgstr "Nama File"
+
+#: gui_main.py:204
+msgid "Location"
+msgstr "Lokasi"
+
+#: gui_main.py:205
+msgid "Size"
+msgstr "Ukuran"
+
+#: gui_main.py:206
+msgid "Last Modified"
+msgstr "Terakhir Diubah"
+
+#: gui_main.py:207 gui_main.py:213 gui_main.py:217
+msgid "Status"
+msgstr "Status"
+
+#: gui_main.py:208
+msgid "Type"
+msgstr "Tipe"
+
+#: gui_main.py:208
+msgid "No extension"
+msgstr "Tanpa ekstensi"
+
+#: gui_main.py:231
+msgid "Error reading file info: {}"
+msgstr "Kesalahan saat membaca info file: {}"
+
+#: gui_main.py:271
+msgid "Please drop a valid file."
+msgstr "Mohon letakkan file yang valid."
+
+#: gui_main.py:291
+msgid "Choose a file"
+msgstr "Pilih sebuah file"
+
+#: gui_main.py:315 gui_main.py:404
+msgid "Please select a file first!"
+msgstr "Silakan pilih file terlebih dahulu!"
+
+#: gui_main.py:324
+msgid "Are you sure you want to lock '{}'?"
+msgstr "Apakah Anda yakin ingin mengunci '{}'?"
+
+#: gui_main.py:325
+msgid "Confirm Lock"
+msgstr "Konfirmasi Kunci"
+
+#: gui_main.py:333
+msgid "Use last password for this file?"
+msgstr "Gunakan kata sandi terakhir untuk file ini?"
+
+#: gui_main.py:334
+msgid "Use Last Password"
+msgstr "Gunakan Kata Sandi Terakhir"
+
+#: gui_main.py:356
+msgid "Enter password for encryption:"
+msgstr "Masukkan kata sandi untuk enkripsi:"
+
+#: gui_dialogs.py:136 gui_main.py:364 gui_main.py:432
+msgid "Password cannot be empty!"
+msgstr "Kata sandi tidak boleh kosong!"
+
+#: gui_main.py:373
+msgid "Locking File"
+msgstr "Mengunci File"
+
+#: gui_main.py:374
+msgid "Locking {}..."
+msgstr "Mengunci {}..."
+
+#: gui_main.py:389
+msgid "Encryption error: {}"
+msgstr "Kesalahan enkripsi: {}"
+
+#: gui_main.py:394
+msgid ""
+"File has been locked successfully!\n"
+"\n"
+"File: {}\n"
+"Password: {}\n"
+"\n"
+"Please keep this password safe!"
+msgstr ""
+"File berhasil dikunci!\n"
+"\n"
+"File: {}\n"
+"Kata Sandi: {}\n"
+"\n"
+"Harap simpan kata sandi ini dengan aman!"
+
+#: gui_main.py:400
+msgid "Failed to lock file!"
+msgstr "Gagal mengunci file!"
+
+#: gui_main.py:408
+msgid "This file is not locked!"
+msgstr "File ini tidak terkunci!"
+
+#: gui_main.py:412
+msgid "Are you sure you want to unlock '{}'?"
+msgstr "Apakah Anda yakin ingin membuka kunci '{}'?"
+
+#: gui_main.py:413
+msgid "Confirm Unlock"
+msgstr "Konfirmasi Buka Kunci"
+
+#: gui_main.py:424
+msgid "Enter password to unlock the file:"
+msgstr "Masukkan kata sandi untuk membuka kunci file:"
+
+#: gui_main.py:441
+msgid "Unlocking File"
+msgstr "Membuka Kunci File"
+
+#: gui_main.py:442
+msgid "Unlocking {}..."
+msgstr "Membuka kunci {}..."
+
+#: gui_main.py:456
+msgid "Decryption error: {}"
+msgstr "Kesalahan dekripsi: {}"
+
+#: gui_main.py:461
+msgid "File has been unlocked successfully!"
+msgstr "File berhasil dibuka kuncinya!"
+
+#: gui_main.py:467
+msgid ""
+"Failed to unlock file!\n"
+"Please check if the password is correct."
+msgstr ""
+"Gagal membuka kunci file!\n"
+"Silakan periksa apakah kata sandi sudah benar."
+
+#: gui_main.py:478
+msgid "Could not open file: {}"
+msgstr "Tidak dapat membuka file: {}"
+
+#: gui_main.py:488
+msgid "File no longer exists!"
+msgstr "File sudah tidak ada!"
+
+#: gui_main.py:502
+msgid "Attempting to unlock {} from history."
+msgstr "Mencoba membuka kunci {} dari riwayat."
+
+#: gui_main.py:513
+msgid ""
+"Are you sure you want to clear all password history?\n"
+"This action cannot be undone."
+msgstr ""
+"Apakah Anda yakin ingin menghapus semua riwayat kata sandi?\n"
+"Tindakan ini tidak dapat dibatalkan."
+
+#: gui_dialogs.py:485 gui_main.py:514
+msgid "Confirm Clear History"
+msgstr "Konfirmasi Hapus Riwayat"
+
+#: gui_main.py:519
+msgid "Password history has been cleared."
+msgstr "Riwayat kata sandi telah dihapus."
+
+#: gui_main.py:522
+msgid "About File Locker dialog"
+msgstr "Dialog Tentang Pengunci File"
+
+#: gui_main.py:526
+msgid ""
+"With this program, you can lock/unlock your secret file using a set of "
+"passwords.\n"
+"\n"
+"Features:\n"
+"- AES-256 encryption,\n"
+"- Password generation,\n"
+"- Password history,\n"
+"- File drag and drop support,\n"
+"- Theme support,\n"
+"- Auto-launch file after unlock."
+msgstr ""
+"Dengan program ini, Anda dapat mengunci/membuka kunci file rahasia Anda "
+"menggunakan serangkaian kata sandi.\n"
+"\n"
+"Fitur:\n"
+"- Enkripsi AES-256,\n"
+"- Pembuatan kata sandi,\n"
+"- Riwayat kata sandi,\n"
+"- Dukungan seret dan lepas file,\n"
+"- Dukungan tema,\n"
+"- Buka file otomatis setelah kunci dibuka."
+
+#: gui_dialogs.py:20 gui_dialogs.py:345
+msgid "Generate Password"
+msgstr "Buat Kata Sandi"
+
+#: gui_dialogs.py:27
+msgid "Generate Password dialog"
+msgstr "Dialog Buat Kata Sandi"
+
+#: gui_dialogs.py:34
+msgid "Generated Password"
+msgstr "Kata Sandi yang Dibuat"
+
+#: gui_dialogs.py:52
+msgid "Password Options"
+msgstr "Opsi Kata Sandi"
+
+#: gui_dialogs.py:56
+msgid "Password Length:"
+msgstr "Panjang Kata Sandi:"
+
+#: gui_dialogs.py:76
+msgid "Uppercase (A-Z)"
+msgstr "Huruf Besar (A-Z)"
+
+#: gui_dialogs.py:77
+msgid "Lowercase (a-z)"
+msgstr "Huruf Kecil (a-z)"
+
+#: gui_dialogs.py:78
+msgid "Digits (0-9)"
+msgstr "Angka (0-9)"
+
+#: gui_dialogs.py:79
+msgid "Symbols (!@#$%^&*)"
+msgstr "Simbol (!@#$%^&*)"
+
+#: gui_dialogs.py:90
+msgid "Generate New Password"
+msgstr "Buat Kata Sandi Baru"
+
+#: gui_dialogs.py:93
+msgid "Enter My Own Password"
+msgstr "Masukkan Kata Sandi Sendiri"
+
+#: gui_dialogs.py:96
+msgid "Copy to Clipboard"
+msgstr "Salin ke Papan Klip"
+
+#: gui_dialogs.py:99
+msgid "Use This Password"
+msgstr "Gunakan Kata Sandi Ini"
+
+#: gui_dialogs.py:100 gui_dialogs.py:275
+msgid "Cancel"
+msgstr "Batal"
+
+#: gui_dialogs.py:120
+msgid "Manual Password Entry"
+msgstr "Entri Kata Sandi Manual"
+
+#: gui_dialogs.py:124
+msgid "Enter your password:"
+msgstr "Masukkan kata sandi Anda:"
+
+#: gui_dialogs.py:161
+msgid "Please select at least one character type!"
+msgstr "Harap pilih setidaknya satu jenis karakter!"
+
+#: gui_dialogs.py:181
+msgid "Password copied to clipboard!"
+msgstr "Kata sandi disalin ke papan klip!"
+
+#: gui_dialogs.py:228
+msgid "Completed"
+msgstr "Selesai"
+
+#: gui_dialogs.py:252
+msgid "Settings dialog"
+msgstr "Dialog Pengaturan"
+
+#: gui_dialogs.py:259
+msgid "General"
+msgstr "Umum"
+
+#: gui_dialogs.py:265 gui_dialogs.py:371
+msgid "Security"
+msgstr "Keamanan"
+
+#: gui_dialogs.py:268
+msgid "Accessibility"
+msgstr "Aksesibilitas"
+
+#: gui_dialogs.py:274
+msgid "Save"
+msgstr "Simpan"
+
+#: gui_dialogs.py:276
+msgid "Reset to Defaults"
+msgstr "Kembalikan ke Awal"
+
+#: gui_dialogs.py:294
+msgid "Interface"
+msgstr "Antarmuka"
+
+#: gui_dialogs.py:297
+msgid "Remember last directory"
+msgstr "Ingat direktori terakhir"
+
+#: gui_dialogs.py:300
+msgid "Auto-launch files after unlock"
+msgstr "Buka file otomatis setelah kunci dibuka"
+
+#: gui_dialogs.py:303
+msgid "Theme:"
+msgstr "Tema:"
+
+#: gui_dialogs.py:304 gui_dialogs.py:413
+msgid "Default"
+msgstr "Standar"
+
+#: gui_dialogs.py:304
+msgid "Dark"
+msgstr "Gelap"
+
+#: gui_dialogs.py:312
+msgid "Language:"
+msgstr "Bahasa:"
+
+#: gui_dialogs.py:340
+msgid "Password Generation"
+msgstr "Pembuatan Kata Sandi"
+
+#: gui_dialogs.py:344
+msgid "Default password mode:"
+msgstr "Mode kata sandi default:"
+
+#: gui_dialogs.py:345
+msgid "Manual Entry"
+msgstr "Entri Manual"
+
+#: gui_dialogs.py:352
+msgid "Default password length:"
+msgstr "Panjang kata sandi default:"
+
+#: gui_dialogs.py:374
+msgid "Confirm file operations"
+msgstr "Konfirmasi operasi file"
+
+#: gui_dialogs.py:377
+msgid "Show password strength meter"
+msgstr "Tampilkan pengukur kekuatan kata sandi"
+
+#: gui_dialogs.py:380
+msgid "Maximum password history entries:"
+msgstr "Jumlah maksimum entri riwayat kata sandi:"
+
+#: gui_dialogs.py:392
+msgid "Clear Password History"
+msgstr "Hapus Riwayat Kata Sandi"
+
+#: gui_dialogs.py:405
+msgid "Screen Reader (NVDA)"
+msgstr "Pembaca Layar (NVDA)"
+
+#: gui_dialogs.py:408
+msgid "Enable NVDA Support"
+msgstr "Aktifkan Dukungan NVDA"
+
+#: gui_dialogs.py:412
+msgid "Verbosity Level:"
+msgstr "Tingkat Kerincian:"
+
+#: gui_dialogs.py:413
+msgid "Quiet"
+msgstr "Singkat"
+
+#: gui_dialogs.py:413
+msgid "Verbose"
+msgstr "Rinci"
+
+#: gui_dialogs.py:444
+msgid "Please restart the application for the language change to take effect."
+msgstr "Silakan mulai ulang aplikasi agar perubahan bahasa diterapkan."
+
+#: gui_dialogs.py:448
+msgid "Restart Required"
+msgstr "Mulai Ulang Diperlukan"
+
+#: gui_dialogs.py:468
+msgid "Settings saved."
+msgstr "Pengaturan disimpan."
+
+#: gui_dialogs.py:472
+msgid "Are you sure you want to reset all settings to defaults?"
+msgstr "Apakah Anda yakin ingin mengembalikan semua pengaturan ke awal?"
+
+#: gui_dialogs.py:473
+msgid "Confirm Reset"
+msgstr "Konfirmasi Reset"
+
+#: gui_dialogs.py:480
+msgid "Settings reset to defaults."
+msgstr "Pengaturan dikembalikan ke awal."
+
+#: gui_dialogs.py:484
+msgid "Are you sure you want to clear all password history?"
+msgstr "Apakah Anda yakin ingin menghapus semua riwayat kata sandi?"
+
+#: gui_dialogs.py:494
+msgid "Password history cleared successfully!"
+msgstr "Riwayat kata sandi berhasil dihapus!"
+
+#: core.py:25 core.py:45
+msgid "Password cannot be empty."
+msgstr "Kata sandi tidak boleh kosong."
+
+#: core.py:47
+msgid "File is not a .locked file."
+msgstr "File ini bukan file .locked."
+
+#: core.py:59
+msgid "Invalid password or corrupted file."
+msgstr "Kata sandi tidak valid atau file rusak."
+
+#: core_encryption.py:84
+msgid "Not a valid locked file or incorrect password"
+msgstr "Bukan file terkunci yang valid atau kata sandi salah"
+
+#: core_encryption.py:109
+msgid "Incorrect password or corrupted file."
+msgstr "Kata sandi salah atau file rusak."
