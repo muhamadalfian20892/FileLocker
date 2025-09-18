@@ -2,8 +2,50 @@ import winreg
 from pathlib import Path
 import os
 import sys
+import ctypes
+import tempfile
 
 from translate import _ # import for reasons
+
+def is_admin() -> bool:
+    """Check if the script is running with administrator privileges."""
+    try:
+        if sys.platform == 'win32':
+            return ctypes.windll.shell32.IsUserAnAdmin() != 0
+        else:
+            return os.geteuid() == 0
+    except Exception:
+        return False
+
+def requires_admin(path: str) -> bool:
+    """
+    Check if modifying a path likely requires administrator privileges.
+    Returns True if a PermissionError is caught, suggesting elevation is needed.
+    """
+    if not os.path.exists(path):
+        return False # Cannot check a non-existent path
+
+    # If we are already admin, no further check is needed.
+    if is_admin():
+        return False
+
+    try:
+        if os.path.isdir(path):
+            # Try to create a temporary file in the directory
+            with tempfile.TemporaryFile(dir=path):
+                pass
+        else: # It's a file
+            # Try to open the file in append mode to check for write access
+            with open(path, 'a'):
+                pass
+    except PermissionError:
+        return True # This is the key indicator
+    except Exception:
+        # Some other error occurred, might be a locked file etc.
+        # For our purpose, we can treat it as needing admin to be safe.
+        return True
+        
+    return False
 
 def get_windows_restricted_paths():
     """Get a list of Windows system and restricted paths"""

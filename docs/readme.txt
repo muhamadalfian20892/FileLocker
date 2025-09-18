@@ -1,130 +1,167 @@
-Hello, and thank you for trying out this program!
+Hello, and thank you for trying out File Locker!
 
-This ReadMe contains all the information you need about the program.
+This README contains all the information you need to get started with the program.
 
 What is File Locker?
 
-As the name suggests, this program lets you lock and unlock your secret files using a password of your choice.
+As the name suggests, File Locker lets you secure your private files and folders using a password of your choice. It's a simple, powerful tool for keeping your data safe.
 
 How Does This Program Work?
 
-Basically, this program encrypts your file using powerful techniques like AES-256 along with some additional modern security measures by choosing to also using sha512 for better cryptography security (not only on the main file data transfer also with password encryption/decryption, it's up to you in settings mode).
+File Locker encrypts your data using the AES-256 algorithm. This is a powerful, modern security technique trusted worldwide for protecting sensitive information.
 
-Once locked, the file can only be accessed and unlocked by File Locker, which can be opened and the same password.
+Once an item is locked, it can only be accessed and unlocked by providing the correct password within the File Locker application.
+
+Key Features.
+
+File & Folder Encryption: Secure individual files or entire folders with all their contents.
+
+Batch Processing: Drag and drop multiple files and folders at once to lock or unlock them in a single operation.
+
+Command-Line Interface (CLI): Automate and script encryption tasks directly from your terminal.
+
+Advanced Password Manager: Generate strong, random passwords or use your own.
+
+Real-time Password Strength Meter: Get instant feedback on how secure your password is.
+
+Password History: Quickly re-use passwords for items you've previously locked.
+
+Drag & Drop Support: Simply drag your files or folders onto the application window to get started.
 
 Getting Started
 
-In the main directory, you’ll find these files:
+In the main directory, you’ll find:
 
-readme.txt: This file, with all the details.
-changelog.txt: Notes on updates and changes to the program.
-FileLocker.exe : The program executable.
+Docs: folder, a folder contain readme and changelog.
+
+FileLocker.exe: The main program.
 
 First Steps:
 
-1. Open the FileLocker.exe.
+Run FileLocker.exe.
 
-2.  The program will automatically create a `settings.config` file for manual configuration if needed.
-      this setting contains all user configurations about look of program, usability preference or cryptography settings preference and saved next launch if done on application setting, you can also configure manually with editor but take more attention not break the `json` format in the settings file, that could result into loading problem on startup
-
-Menu Options
+The program will create a settings.config file on its first launch. This file stores your preferences for themes, password generation, and other application behaviors. You can manage these settings from within the app or edit the Config file directly if you're careful.
 
 Main Interface
 
-When you launch the program, you’ll see:
+Select File/Folder Buttons: Choose an item to process.
 
-* Browse Button: Use this to select a file (pretty self-explanatory).
-* ReadOnly Box: Displays details of the selected file, including its lock/unlock status.
-* Recent Files List: Shows the history of files you've locked/unlocked with it, along with it type such as lock/unlock event
+Item Info Box: Displays details about the selected file or folder, including its lock status.
+
+Recent Items List: Shows a history of recently processed items. Double-click an entry to quickly unlock it with its last used password.
+
+Lock/Unlock Button: The main action button, which intelligently changes based on the selected item's status.
 
 Menubar Options
-Access more options through the menubar. Simply press the Alt key on your keyboard to go to it.
 
-1. File Menu:
-    * Open: Same as the Browse button.
-    * Exit: Closes the program.
+Press Alt to focus the menubar.
 
-2. Tools Menu:
-    * Settings: Adjust program configurations (read more details at sections "Settings").
-    * Clear Password History: Deletes all saved password history.
+File Menu:
 
-3. Help Menu:
-    * Help: Opens the help box for basic information
+Open File/Folder: Same as the selection buttons.
+
+Exit: Closes the program.
+
+Tools Menu:
+
+Settings: Customize the program's behavior.
+
+Clear Password History: Deletes all saved password history (this is irreversible).
+
+Help Menu:
+
+About File Locker: Shows version and program information.
 
 Settings
-Access the Settings menu to customize the program. It includes the following categories:
 
-General:
+Customize the program from the Settings window:
 
-  *  Remember Last Directory: When enabled, the program remembers the last folder you accessed when browse your folders for encrypting/decrypting.
-  * AutoLaunch File After Unlock: Decide whether the program should open files automatically after unlocking (default set as true).
- *  Auto Remove Files after Unlock (be very, very careful): decide if automatically remove selected and processed after a successfully unlock event by setting into True state and saving configuration (note, when use this it is irreversible).
-  * Theme: Customize the program’s appearance with pre made themes, more like light (Default) or dark.
-Save: Save your settings by pressing `save button` at right down window section.
- Reset to Defaults: Revert all settings back to default. (by clicking this setting you wont loose any of existing file protection made by this software as these process is fully saved).
+General
 
-Password:
+Remember Last Directory: The app will remember the last folder you browsed.
 
-  * Default Password Mode: Choose between manual entry (using custom set password from a keyboard ) or automatically generating a password.
- * Default Password Length: Set the length of generated passwords using the choices (for more longer stronger more secure, less is not recomended to user but still acceptable using this software functionality for educational purpose as well)
+Auto-launch Files After Unlock: Automatically open files or folders after they are successfully decrypted.
 
-Security:
+Theme: Switch between a light (Default) and dark theme.
 
-  *  Confirm File Operations: Enable confirmation prompts for locking/unlocking files by dialog showing up.
-    * This adds one additional step and could protect accidental operation from mis-input, as default the security has `enabled confirmation`.
-  * Password Strength Meter: Displays the strength of your password.
-* Maximum Password History: Define how many passwords to save in the history, less than `100`.
-  * Clear Password History: Clears the saved password history, it deletes data irreversibly.
-Encryption:
+Language: Change the program language acording of your choice.
 
-* Select Stronger or Fast Password Creation Mode by key derivation selection process.
- *   PBKDF2 is the classic for fast process for secure level data
- *  SHA512 is a secure hashing algorithm making the key derive a better strength and it should be choosen rather than PBKDF2 as best cryptography practise when data is sensitive
-   * For the beginner user who are less familiar on cryptographic security `SHA512` is highly recommended and its best choice.
- * Enable compression level by compression, it helps make size more lesser and increase data transformation on both encrypt/decrypt (if the machine is capable to high speeds), the file data still as secured level for this, just helps performance by selecting the `compress` option if need.
-    * Compression has an `on` and `off` checkbox so use wisely
+Password
 
-How to Use?
+Default Password Mode: Choose whether the password dialog defaults to generating a new password or expects manual entry.
 
-1. Select a File:
-    * Click the "Browse" button and choose the file you want to lock.
-    * Note: You cannot lock files located in the same directory as this program, or on protected window folder
+Default Password Length: Set the default length for generated passwords. Longer is stronger!
 
-2. Check File Status:
-  *   The status of your selected file (locked or unlocked) will be displayed in the ReadOnly box along other details.
-  *  If the file is already locked, the "Lock" button won’t be available, and vice versa.
+Security
 
-3. Lock the File:
-   * Import an unlocked file and click the "Lock" button.
-    *  A menu window of selection password choice either generate random password based on option on menu settings or using your input of password.
-    *  A successful window message will pop-up containing generated password or manual password and information about file encryption success.
+Confirm File Operations: Adds an extra confirmation step before locking or unlocking to prevent accidental operations.
 
-4. Unlock the File:
-    * Import a locked file and click the "Unlock" button.
-   * You will prompted to use password which you already set on the lock step.
-  * A success or failure dialog should be appear at completion (successful unlock or decryption).
+Show Password Strength Meter: Toggles the visibility of the password strength feedback bar.
+
+Maximum Password History Entries: Control how many items are kept in your history.
+
+How to Use
+
+Select an Item:
+
+Click "Select File" or "Select Folder," or simply drag and drop your item(s) onto the window.
+
+Note: You cannot lock items located in the program's own directory or in protected Windows system folders.
+
+Check Status:
+
+The info box will show whether the selected item is locked or unlocked. The main "Lock/Unlock" button will be enabled accordingly.
+
+Lock an Item:
+
+Select an unlocked file or folder and click "Lock/Unlock".
+
+The Password Manager dialog will appear. You can generate a strong password or type your own.
+
+A success message will confirm the operation. Remember your password!
+
+Unlock an Item:
+
+Select a locked item (.locked or .flka file) and click "Lock/Unlock".
+
+You will be prompted to enter the password you used to lock it.
+
+A dialog will confirm if the unlock was successful.
+
+Command-Line Interface (CLI)
+
+For advanced users and automation, File Locker includes a full CLI. Open a terminal (like Command Prompt or PowerShell) in the program's directory and run commands like:
+
+Encrypt a file:
+FileLocker.exe encrypt "C:\path\to\myfile.txt" -p "MySecretPassword"
+
+Encrypt a folder:
+FileLocker.exe encrypt "C:\path\to\my_folder" (You will be prompted for a password).
+
+Decrypt an item:
+FileLocker.exe decrypt "C:\path\to\myfile.txt.locked"
+
+Get help:
+FileLocker.exe --help or FileLocker.exe encrypt --help
 
 Q&A
- Q: Why did you create this program?
- A: I wanted an easy way to secure my own secret files.
- Q: What protections does this program have?
- A: You cannot lock files located in the program’s directory, and I've also tried to prevent locking files in sensitive Windows directories and using most common techniques such as modern high encryption.
+
+Q: Why did you create this program?
+A: I wanted a simple, reliable, and open-source tool to secure my own files.
+
 Q: Can I recover my file if I forget the password?
- A: There’s only one option: you can click the locked item in the "Recent Files List" to bypass the password or use last lock / unlock action you had previously used. However, if your history is lost, unfortunately, no. For security reasons, files are irreversibly encrypted, and without the correct password, they can’t be unlocked.
+A: No. For security reasons, there are no backdoors. If you lose your password, the data is irreversibly encrypted and cannot be recovered. You can try to unlock an item from the "Recent Items List," which uses the last known password, but if that history is cleared, recovery is impossible.
 
 Q: Will this program work on all file types?
-A: Yes, it works with any file type, but make sure you don’t lock essential system files (also I included restriction by using protected Windows directory path).
+A: Yes, it works with any file or folder. The program includes safeguards to prevent you from locking critical system files.
 
-Q: Can I share my lock file with someone else?
-A: Yes, but they won’t be able to do anything with the file unless they have this program and the correct password that was created or used before (make sure keep in mind SHA512 key derivate may prevent another user which dont have right setting even right password for security protection in that case)
+Q: Can I share a locked file with someone else?
+A: Yes, but they will need a copy of the File Locker program and the correct password to unlock it.
 
-For more tech-savy User; We did create program using Python using wxPython pycryptodome libaries and so, this program could easily be adapted to most modern operative system. i'm focused on code and cryptography level on implementing SHA512 as highest priority option
-
-This program is still in its early stages. I’m looking forward to adding more features in future updates!
-
+This program is built with Python, wxPython for the GUI, and PyCryptodome for encryption. It is designed to be cross-platform, but the primary focus is on Windows.
 
 Enjoy using File Locker, and keep your files secure!
 
 Disclaimer
 
- This program provide under “MIT” and educational purposes, the user have its full rights when accessing and using, the risk and consequences always should be kept by users, do not use without acknowledging. and have full responsibility for any potential harm doing from improper use by unexperienced people or for misuse (we added additional options, please user use care before using option provided).
+This program is provided under the Apache License Version 2.0 and for educational and practical purposes. The user assumes full responsibility for its use. Always keep backups of important data. The developer is not responsible for any data loss that may result from forgotten passwords, program misuse, or software errors.

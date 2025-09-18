@@ -5,7 +5,7 @@ import random
 import os
 from datetime import datetime
 
-from gui_utils import create_bold_label, PasswordStrengthMeter
+from gui_utils import create_bold_label, PasswordStrengthMeter, ViewPasswordToggleButton
 from translate import _
 from nvda import speak
 
@@ -17,39 +17,44 @@ class PasswordGeneratorDialog(wx.Dialog):
     def __init__(self, parent, settings):
         super().__init__(
             parent,
-            title=_("Generate Password"),
+            title=_("Password Manager"),
             size=(500, 500),
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         )
         self.settings = settings
         self.password = ""
         self.init_ui()
-        speak(_("Generate Password dialog"))
+        self.Center()
+        speak(_("Password Manager dialog"))
     
     def init_ui(self):
         panel = wx.Panel(self)
         main_sizer = wx.BoxSizer(wx.VERTICAL)
         
-        # Password display area
-        display_box = wx.StaticBox(panel, label=_("Generated Password"))
+        # Password entry area
+        display_box = wx.StaticBox(panel, label=_("Password"))
         display_sizer = wx.StaticBoxSizer(display_box, wx.VERTICAL)
         
-        self.password_ctrl = wx.TextCtrl(
-            panel,
-            style=wx.TE_READONLY | wx.TE_CENTER,
-            size=(-1, 30)
-        )
+        # Password input with toggle
+        pwd_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.password_ctrl = wx.TextCtrl(panel, style=wx.TE_PASSWORD, size=(-1, 30))
         self.password_ctrl.SetFont(
             wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD)
         )
-        display_sizer.Add(self.password_ctrl, 0, wx.EXPAND | wx.ALL, 5)
+        self.toggle_button = ViewPasswordToggleButton(panel, self.password_ctrl)
+        
+        pwd_sizer.Add(self.password_ctrl, 1, wx.EXPAND | wx.ALL, 5) # FIX: Removed wx.ALIGN_CENTER_VERTICAL
+        pwd_sizer.Add(self.toggle_button, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 5)
+        display_sizer.Add(pwd_sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+        self.password_ctrl.Bind(wx.EVT_TEXT, self.on_password_change)
         
         # Password strength meter
         self.strength_meter = PasswordStrengthMeter(panel)
         display_sizer.Add(self.strength_meter, 0, wx.EXPAND | wx.ALL, 5)
         
         # Generation options
-        options_box = wx.StaticBox(panel, label=_("Password Options"))
+        options_box = wx.StaticBox(panel, label=_("Password Generation Options"))
         options_sizer = wx.StaticBoxSizer(options_box, wx.VERTICAL)
         
         # Length selection with radio buttons
@@ -64,9 +69,8 @@ class PasswordGeneratorDialog(wx.Dialog):
             self.length_radios.append(radio)
             length_sizer.Add(radio, 0, wx.RIGHT, 10)
         
-        # Select default length
         default_length = self.settings.get('default_password_length')
-        default_index = self.length_choices.index(default_length)
+        default_index = self.length_choices.index(default_length) if default_length in self.length_choices else 0
         self.length_radios[default_index].SetValue(True)
         
         options_sizer.Add(length_sizer, 0, wx.ALL, 5)
@@ -78,9 +82,10 @@ class PasswordGeneratorDialog(wx.Dialog):
         self.use_digits = wx.CheckBox(panel, label=_("Digits (0-9)"))
         self.use_symbols = wx.CheckBox(panel, label=_("Symbols (!@#$%^&*)"))
         
-        for ctrl in [self.use_upper, self.use_lower, self.use_digits, self.use_symbols]:
+        for ctrl, setting_key in zip([self.use_upper, self.use_lower, self.use_digits, self.use_symbols],
+                                     ['use_uppercase', 'use_lowercase', 'use_digits', 'use_symbols']):
             types_sizer.Add(ctrl, 0)
-            ctrl.SetValue(True)
+            ctrl.SetValue(self.settings.get(setting_key))
         
         options_sizer.Add(types_sizer, 0, wx.ALL | wx.EXPAND, 5)
         
@@ -90,9 +95,6 @@ class PasswordGeneratorDialog(wx.Dialog):
         generate_btn = wx.Button(panel, label=_("Generate New Password"))
         generate_btn.Bind(wx.EVT_BUTTON, self.on_generate)
         
-        manual_btn = wx.Button(panel, label=_("Enter My Own Password"))
-        manual_btn.Bind(wx.EVT_BUTTON, self.on_manual_entry)
-        
         copy_btn = wx.Button(panel, label=_("Copy to Clipboard"))
         copy_btn.Bind(wx.EVT_BUTTON, self.on_copy)
         
@@ -100,57 +102,39 @@ class PasswordGeneratorDialog(wx.Dialog):
         cancel_btn = wx.Button(panel, wx.ID_CANCEL, label=_("Cancel"))
         
         btn_sizer.Add(generate_btn, 1, wx.ALL, 5)
-        btn_sizer.Add(manual_btn, 1, wx.ALL, 5)
         btn_sizer.Add(copy_btn, 1, wx.ALL, 5)
-        btn_sizer.AddSpacer(20)
+        btn_sizer.AddStretchSpacer()
         btn_sizer.Add(use_btn, 1, wx.ALL, 5)
         btn_sizer.Add(cancel_btn, 1, wx.ALL, 5)
         
-        # Add all to main sizer
+        self.Bind(wx.EVT_BUTTON, self.on_use_password, id=wx.ID_OK)
+        
         main_sizer.Add(display_sizer, 0, wx.EXPAND | wx.ALL, 10)
         main_sizer.Add(options_sizer, 0, wx.EXPAND | wx.ALL, 10)
         main_sizer.Add(btn_sizer, 0, wx.EXPAND | wx.ALL, 10)
         
         panel.SetSizer(main_sizer)
-        
-        # Generate initial password
         self.on_generate(None)
-    
-    def on_manual_entry(self, event):
-        title = _("Manual Password Entry")
-        speak(title)
-        dlg = wx.TextEntryDialog(
-            self,
-            _("Enter your password:"),
-            title,
-            style=wx.TE_PASSWORD | wx.OK | wx.CANCEL
-        )
-        
-        if dlg.ShowModal() == wx.ID_OK:
-            password = dlg.GetValue()
-            if password:
-                self.password = password
-                self.password_ctrl.SetValue(password)
-                self.strength_meter.set_strength(password)
-            else:
-                msg = _("Password cannot be empty!")
-                speak(msg)
-                wx.MessageBox(
-                    msg,
-                    _("Error"),
-                    wx.OK | wx.ICON_ERROR
-                )
-        dlg.Destroy()
-    
+
+    def on_password_change(self, event):
+        password = self.toggle_button.get_value()
+        self.strength_meter.set_strength(password)
+        event.Skip()
+
+    def on_use_password(self, event):
+        self.password = self.toggle_button.get_value()
+        if not self.password:
+            show_error_dialog(self, _("Password cannot be empty!"))
+            return
+        self.EndModal(wx.ID_OK)
+
     def on_generate(self, event):
-        # Get selected length
-        selected_length = 16  # default
+        selected_length = 16
         for radio, length in zip(self.length_radios, self.length_choices):
             if radio.GetValue():
                 selected_length = length
                 break
         
-        # Build character set
         chars = ""
         if self.use_upper.GetValue(): chars += string.ascii_uppercase
         if self.use_lower.GetValue(): chars += string.ascii_lowercase
@@ -158,33 +142,21 @@ class PasswordGeneratorDialog(wx.Dialog):
         if self.use_symbols.GetValue(): chars += string.punctuation
         
         if not chars:
-            msg = _("Please select at least one character type!")
-            speak(msg)
-            wx.MessageBox(
-                msg,
-                _("Error"),
-                wx.OK | wx.ICON_ERROR
-            )
+            show_error_dialog(self, _("Please select at least one character type!"))
             return
         
-        # Generate password
-        self.password = ''.join(random.choice(chars) for _ in range(selected_length))
-        self.password_ctrl.SetValue(self.password)
-        
-        # Update strength meter
-        self.strength_meter.set_strength(self.password)
+        generated_password = ''.join(random.choice(chars) for _ in range(selected_length))
+        self.toggle_button.set_value(generated_password)
+        self.strength_meter.set_strength(generated_password)
     
     def on_copy(self, event):
+        password_to_copy = self.toggle_button.get_value()
         if wx.TheClipboard.Open():
-            wx.TheClipboard.SetData(wx.TextDataObject(self.password))
+            wx.TheClipboard.SetData(wx.TextDataObject(password_to_copy))
             wx.TheClipboard.Close()
             msg = _("Password copied to clipboard!")
             speak(msg)
-            wx.MessageBox(
-                msg,
-                _("Success"),
-                wx.OK | wx.ICON_INFORMATION
-            )
+            wx.MessageBox(msg, _("Success"), wx.OK | wx.ICON_INFORMATION)
 
 class ProgressDialog(wx.Dialog):
     def __init__(self, parent, title: str, message: str):
@@ -237,7 +209,6 @@ class SettingsDialog(wx.Dialog):
         )
         self.settings = settings
         
-        # track the language so we know if we need to show the restart msg
         self.original_lang = "en"
         if os.path.exists(CONFIG_FILE):
             try:
@@ -246,7 +217,7 @@ class SettingsDialog(wx.Dialog):
                     if the_saved_lang:
                         self.original_lang = the_saved_lang
             except:
-                pass # lol who cares if it fails
+                pass
 
         self.init_ui()
         speak(_("Settings dialog"))
@@ -308,7 +279,6 @@ class SettingsDialog(wx.Dialog):
         theme_box.Add(theme_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 5)
         theme_box.Add(self.theme_choice, 0)
 
-        # Language dropdown
         lang_label = wx.StaticText(panel, label=_("Language:"))
         self.the_lang_codes = list(SUPPORTED_LANGUAGES.keys())
         the_lang_names = list(SUPPORTED_LANGUAGES.values())
@@ -408,7 +378,6 @@ class SettingsDialog(wx.Dialog):
         self.nvda_enabled = wx.CheckBox(panel, label=_("Enable NVDA Support"))
         self.nvda_enabled.SetValue(self.settings.get('nvda_enabled'))
         
-        # Verbosity options
         verbosity_label = wx.StaticText(panel, label=_("Verbosity Level:"))
         self.verbosity_choices = [_("Quiet"), _("Default"), _("Verbose")]
         self.verbosity_keys = ["quiet", "default", "verbose"]
@@ -419,7 +388,7 @@ class SettingsDialog(wx.Dialog):
             current_idx = self.verbosity_keys.index(current_verbosity)
             self.nvda_verbosity.SetSelection(current_idx)
         except ValueError:
-            self.nvda_verbosity.SetSelection(1) # Default to 'default'
+            self.nvda_verbosity.SetSelection(1)
         
         verbosity_box = wx.BoxSizer(wx.HORIZONTAL)
         verbosity_box.Add(verbosity_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 5)
@@ -433,7 +402,6 @@ class SettingsDialog(wx.Dialog):
         return panel
     
     def on_save(self, event):
-        # check if they fiddled with the language dropdown
         selected_idx = self.lang_choice.GetSelection()
         new_code = self.the_lang_codes[selected_idx]
         
@@ -450,7 +418,6 @@ class SettingsDialog(wx.Dialog):
             )
             self.original_lang = new_code
         
-        # Save all other settings
         self.settings.set('remember_last_directory', self.remember_dir.GetValue())
         self.settings.set('auto_launch_after_unlock', self.auto_launch.GetValue())
         self.settings.set('theme', 'dark' if self.theme_choice.GetSelection() == 1 else 'default')
@@ -459,8 +426,6 @@ class SettingsDialog(wx.Dialog):
         self.settings.set('confirm_file_operations', self.confirm_ops.GetValue())
         self.settings.set('show_password_strength', self.show_strength.GetValue())
         self.settings.set('max_history_entries', self.max_history.GetValue())
-        
-        # Save NVDA settings
         self.settings.set('nvda_enabled', self.nvda_enabled.GetValue())
         selected_verbosity_idx = self.nvda_verbosity.GetSelection()
         self.settings.set('nvda_verbosity', self.verbosity_keys[selected_verbosity_idx])
